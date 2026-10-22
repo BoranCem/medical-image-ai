@@ -1,8 +1,0 @@
-medmnist
-torch
-torchvision
-streamlit
-scikit-learn
-matplotlib
-pillow
-numpy
