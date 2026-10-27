@@ -1,84 +1,66 @@
-"""Streamlit demo for the educational PneumoniaMNIST classifier."""
-
-from pathlib import Path
 
 import streamlit as st
 import torch
-from PIL import Image, ImageOps
+from PIL import Image
 from torchvision import transforms
 
 from model import PneumoniaCNN
 
-ROOT = Path(__file__).resolve().parent
-MODEL_PATH = ROOT / "models" / "pneumonia_cnn.pth"
-CLASS_NAMES = ["Normal", "Pneumonia-associated"]
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-st.set_page_config(page_title="Medical Image AI", page_icon="🩻")
-st.title("Chest X-ray Classification — Learning Demo")
-st.warning(
-    "Educational prototype only. This is not a medical device and must not be "
-    "used for diagnosis, treatment, or other medical decisions."
-)
-st.write(
-    "Upload an image to explore how a small model trained on PneumoniaMNIST "
-    "behaves. The dataset uses 28×28 pixel images; results on other images may "
-    "be unreliable."
+st.set_page_config(
+    page_title="Chest X-Ray AI",
+    page_icon="🩻",
+    layout="centered"
 )
 
-if not MODEL_PATH.exists():
-    st.info(
-        "The trained model file was not found. Train the model using "
-        "`notebooks/train_model.ipynb`, then place `pneumonia_cnn.pth` in "
-        "`models/` and reload this page."
-    )
-    st.stop()
-
+MODEL_PATH = "models/pneumonia_cnn_weighted.pth"
 
 @st.cache_resource
 def load_model():
-    model = PneumoniaCNN().to(DEVICE)
-    state = torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True)
-    model.load_state_dict(state)
+    model = PneumoniaCNN()
+    model.load_state_dict(
+        torch.load(MODEL_PATH, map_location="cpu", weights_only=True)
+    )
     model.eval()
     return model
 
+model = load_model()
+
+transform = transforms.Compose([
+    transforms.Grayscale(num_output_channels=1),
+    transforms.Resize((28, 28)),
+    transforms.ToTensor()
+])
+
+st.title("🩻 Chest X-Ray Analysis")
+st.write("Upload a chest X-ray image to get an AI model prediction.")
+
+st.warning(
+    "Educational prototype only. This model is not a medical "
+    "diagnostic tool and must not be used for clinical decisions."
+)
 
 uploaded_file = st.file_uploader(
-    "Choose an image file", type=["png", "jpg", "jpeg", "bmp"]
+    "Upload a chest X-ray",
+    type=["jpg", "jpeg", "png"]
 )
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded image", use_container_width=True)
+    image = Image.open(uploaded_file).convert("RGB")
 
-    preprocess = transforms.Compose(
-        [
-            transforms.Grayscale(num_output_channels=1),
-            transforms.Resize((28, 28)),
-            transforms.ToTensor(),
-        ]
-    )
-    tensor = preprocess(image.convert("RGB")).unsqueeze(0).to(DEVICE)
+    st.image(image, caption="Uploaded X-ray", width=350)
 
-    if st.button("Run model"):
-        model = load_model()
+    if st.button("Analyze Image"):
+        input_tensor = transform(image).unsqueeze(0)
+
         with torch.no_grad():
-            logits = model(tensor)
-            scores = torch.softmax(logits, dim=1)[0].cpu()
+            output = model(input_tensor)
+            probabilities = torch.softmax(output, dim=1)
+            prediction = torch.argmax(probabilities, dim=1).item()
 
-        predicted_index = int(torch.argmax(scores).item())
-        st.subheader(f"Model output: {CLASS_NAMES[predicted_index]}")
-        st.write("Relative model scores (not clinical probabilities):")
-        st.bar_chart(
-            {
-                "Model score": {
-                    CLASS_NAMES[0]: float(scores[0]),
-                    CLASS_NAMES[1]: float(scores[1]),
-                }
-            }
-        )
-        st.caption(
-            "These scores reflect this model's output only. They do not establish "
-            "whether a person has pneumonia."
-        )
+        classes = ["Normal", "Pneumonia-associated"]
+        predicted_class = classes[prediction]
+        confidence = probabilities[0][prediction].item() * 100
+
+        st.subheader("Model Output")
+        st.write(f"**Prediction:** {predicted_class}")
+        st.write(f"**Model score:** {confidence:.2f}%")
