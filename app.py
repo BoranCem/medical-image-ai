@@ -30,6 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 MODEL_PATH = BASE_DIR / "models" / "pneumonia_cnn_weighted.pth"
 EVALUATION_PATH = BASE_DIR / "evaluation_results.json"
+HISTORY_PATH = BASE_DIR / "training_history.json"
 
 
 # --------------------------------------------------
@@ -69,6 +70,20 @@ def load_evaluation_results():
 
 
 evaluation_results = load_evaluation_results()
+
+
+# --------------------------------------------------
+# LOAD TRAINING HISTORY
+# --------------------------------------------------
+
+@st.cache_data
+def load_training_history():
+
+    with open(HISTORY_PATH, "r") as file:
+        return json.load(file)
+
+
+training_history = load_training_history()
 
 
 # --------------------------------------------------
@@ -422,6 +437,80 @@ with evaluation_tab:
         y_label="Score",
         height=350
     )
+
+    st.divider()
+
+    # TRAINING HISTORY
+
+    st.subheader("Training History")
+
+    st.write(
+        "Visualizing how the model learned during training."
+    )
+
+    train_losses = training_history["train_loss"]
+    val_losses = training_history["val_loss"]
+
+    train_accuracies = training_history["train_accuracy"]
+    val_accuracies = training_history["val_accuracy"]
+
+    history_lengths = {
+        len(train_losses),
+        len(val_losses),
+        len(train_accuracies),
+        len(val_accuracies)
+    }
+
+    if len(history_lengths) == 1 and len(train_losses) > 0:
+
+        epochs = list(range(1, len(train_losses) + 1))
+
+        # LOSS CHART
+
+        st.markdown("#### Loss per Epoch")
+
+        loss_data = pd.DataFrame({
+            "Epoch": epochs,
+            "Training Loss": train_losses,
+            "Validation Loss": val_losses
+        }).set_index("Epoch")
+
+        st.line_chart(
+            loss_data,
+            y_label="Loss",
+            height=300
+        )
+
+        # ACCURACY CHART
+
+        st.markdown("#### Accuracy per Epoch")
+
+        accuracy_data = pd.DataFrame({
+            "Epoch": epochs,
+            "Training Accuracy": [
+                value * 100 for value in train_accuracies
+            ],
+            "Validation Accuracy": [
+                value * 100 for value in val_accuracies
+            ]
+        }).set_index("Epoch")
+
+        st.line_chart(
+            accuracy_data,
+            y_label="Accuracy (%)",
+            height=300
+        )
+
+        st.caption(
+            f"Training history contains {len(epochs)} epochs."
+        )
+
+    else:
+
+        st.warning(
+            "Training history is empty or its metric lists "
+            "have different lengths. Please check training_history.json."
+        )
 
     st.divider()
 
