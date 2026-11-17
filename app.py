@@ -3,6 +3,7 @@ import json
 import streamlit as st
 import torch
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from pathlib import Path
 from PIL import Image
@@ -385,29 +386,52 @@ with evaluation_tab:
 
     st.divider()
 
+    
     # CONFUSION MATRIX
 
     st.subheader("Confusion Matrix")
 
     cm = evaluation_results["confusion_matrix"]
 
-    confusion_df = pd.DataFrame(
-        cm,
-        index=["Actual Normal", "Actual Pneumonia"],
-        columns=["Predicted Normal", "Predicted Pneumonia"]
-    )
+    fig, ax = plt.subplots(figsize=(6, 4))
 
-    st.dataframe(
-        confusion_df,
-        use_container_width=True
-    )
+    image = ax.imshow(cm, cmap="Blues")
+
+    ax.set_xticks([0, 1])
+    ax.set_yticks([0, 1])
+
+    ax.set_xticklabels(["Normal", "Pneumonia"])
+    ax.set_yticklabels(["Normal", "Pneumonia"])
+
+    ax.set_xlabel("Predicted Label")
+    ax.set_ylabel("Actual Label")
+
+    ax.set_title("Confusion Matrix")
+
+    # Add numerical values
+    for i in range(2):
+        for j in range(2):
+
+            ax.text(
+                j,
+                i,
+                str(cm[i][j]),
+                ha="center",
+                va="center",
+                color="black",
+                fontsize=14,
+                fontweight="bold"
+            )
+
+    fig.colorbar(image, ax=ax)
+
+    st.pyplot(fig)
+
+    plt.close(fig)
 
     st.caption(
-        "Rows represent actual classes; columns represent "
-        "predicted classes."
+        "Rows represent actual classes; columns represent predicted classes."
     )
-
-    st.divider()
 
     # METRIC COMPARISON
 
