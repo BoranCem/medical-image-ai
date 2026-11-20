@@ -1,0 +1,157 @@
+{
+    "model_name": "ResNet18",
+    "dataset": "ChestMNIST",
+    "image_size": "128x128",
+    "num_classes": 14,
+    "pretrained": true,
+    "epochs": 5,
+    "best_epoch": 3,
+    "batch_size": 32,
+    "optimizer": "Adam",
+    "learning_rate": 0.0001,
+    "loss_function": "BCEWithLogitsLoss",
+    "pos_weight_max": 50.0,
+    "best_val_loss": 0.9648559219137556,
+    "class_names": [
+        "atelectasis",
+        "cardiomegaly",
+        "effusion",
+        "infiltration",
+        "mass",
+        "nodule",
+        "pneumonia",
+        "pneumothorax",
+        "consolidation",
+        "edema",
+        "emphysema",
+        "fibrosis",
+        "pleural",
+        "hernia"
+    ],
+    "thresholds": {
+        "atelectasis": 0.6600000000000001,
+        "cardiomegaly": 0.9000000000000002,
+        "effusion": 0.7700000000000002,
+        "infiltration": 0.5300000000000001,
+        "mass": 0.7700000000000002,
+        "nodule": 0.6600000000000001,
+        "pneumonia": 0.8200000000000002,
+        "pneumothorax": 0.7700000000000002,
+        "consolidation": 0.7800000000000001,
+        "edema": 0.8900000000000002,
+        "emphysema": 0.8700000000000002,
+        "fibrosis": 0.6100000000000001,
+        "pleural": 0.7100000000000002,
+        "hernia": 0.7500000000000002
+    },
+    "classification_report": {
+        "atelectasis": {
+            "precision": 0.27976190476190477,
+            "recall": 0.46201966041108133,
+            "f1-score": 0.34850016852039095,
+            "support": 1119.0
+        },
+        "cardiomegaly": {
+            "precision": 0.25133689839572193,
+            "recall": 0.39166666666666666,
+            "f1-score": 0.30618892508143325,
+            "support": 240.0
+        },
+        "effusion": {
+            "precision": 0.38929695697796435,
+            "recall": 0.5743034055727554,
+            "f1-score": 0.4640400250156348,
+            "support": 1292.0
+        },
+        "infiltration": {
+            "precision": 0.30934789592033407,
+            "recall": 0.47720515361744303,
+            "f1-score": 0.3753654258429156,
+            "support": 2018.0
+        },
+        "mass": {
+            "precision": 0.23519009725906279,
+            "recall": 0.4256,
+            "f1-score": 0.30296127562642367,
+            "support": 625.0
+        },
+        "nodule": {
+            "precision": 0.14285714285714285,
+            "recall": 0.28548123980424145,
+            "f1-score": 0.19042437431991294,
+            "support": 613.0
+        },
+        "pneumonia": {
+            "precision": 0.14285714285714285,
+            "recall": 0.09774436090225563,
+            "f1-score": 0.11607142857142858,
+            "support": 133.0
+        },
+        "pneumothorax": {
+            "precision": 0.2669616519174041,
+            "recall": 0.35912698412698413,
+            "f1-score": 0.3062605752961083,
+            "support": 504.0
+        },
+        "consolidation": {
+            "precision": 0.14308300395256918,
+            "recall": 0.40492170022371365,
+            "f1-score": 0.21144859813084113,
+            "support": 447.0
+        },
+        "edema": {
+            "precision": 0.15578947368421053,
+            "recall": 0.37,
+            "f1-score": 0.21925925925925926,
+            "support": 200.0
+        },
+        "emphysema": {
+            "precision": 0.13548387096774195,
+            "recall": 0.20192307692307693,
+            "f1-score": 0.16216216216216217,
+            "support": 208.0
+        },
+        "fibrosis": {
+            "precision": 0.049009384775808136,
+            "recall": 0.28313253012048195,
+            "f1-score": 0.08355555555555555,
+            "support": 166.0
+        },
+        "pleural": {
+            "precision": 0.14970930232558138,
+            "recall": 0.2768817204301075,
+            "f1-score": 0.19433962264150945,
+            "support": 372.0
+        },
+        "hernia": {
+            "precision": 0.09090909090909091,
+            "recall": 0.17073170731707318,
+            "f1-score": 0.11864406779661017,
+            "support": 41.0
+        },
+        "micro avg": {
+            "precision": 0.2408062234794908,
+            "recall": 0.4267986964151416,
+            "f1-score": 0.3078940229677186,
+            "support": 7978.0
+        },
+        "macro avg": {
+            "precision": 0.19582812982583425,
+            "recall": 0.3414813004368486,
+            "f1-score": 0.24280153313001326,
+            "support": 7978.0
+        },
+        "weighted avg": {
+            "precision": 0.2606637496968071,
+            "recall": 0.4267986964151416,
+            "f1-score": 0.32081800131731225,
+            "support": 7978.0
+        },
+        "samples avg": {
+            "precision": 0.12465216320952126,
+            "recall": 0.18602073862792287,
+            "f1-score": 0.13627210307395707,
+            "support": 7978.0
+        }
+    }
+}
