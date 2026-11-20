@@ -1,0 +1,46 @@
+{
+    "model": "ResNet18 with Data Augmentation",
+    "input_size": "128x128",
+    "num_classes": 14,
+    "best_epoch": 3,
+    "best_val_loss": 0.9736377464512557,
+    "thresholds": {
+        "atelectasis": 0.7100000000000002,
+        "cardiomegaly": 0.9200000000000003,
+        "effusion": 0.7300000000000002,
+        "infiltration": 0.4800000000000001,
+        "mass": 0.7300000000000002,
+        "nodule": 0.6300000000000001,
+        "pneumonia": 0.6600000000000001,
+        "pneumothorax": 0.8300000000000002,
+        "consolidation": 0.7600000000000002,
+        "edema": 0.8700000000000002,
+        "emphysema": 0.9200000000000003,
+        "fibrosis": 0.7400000000000002,
+        "pleural": 0.7500000000000002,
+        "hernia": 0.6900000000000002
+    },
+    "class_f1_scores": {
+        "atelectasis": 0.33505917159763315,
+        "cardiomegaly": 0.3184931506849315,
+        "effusion": 0.4581379772270596,
+        "infiltration": 0.3693724420190996,
+        "mass": 0.31565656565656564,
+        "nodule": 0.15147453083109919,
+        "pneumonia": 0.10263522884882108,
+        "pneumothorax": 0.3,
+        "consolidation": 0.21711229946524063,
+        "edema": 0.2173314993122421,
+        "emphysema": 0.1527777777777778,
+        "fibrosis": 0.08253094910591471,
+        "pleural": 0.1972093023255814,
+        "hernia": 0.1694915254237288
+    },
+    "metrics": {
+        "micro_precision": 0.2384138962055955,
+        "micro_recall": 0.4197793933316621,
+        "micro_f1": 0.3041089670828604,
+        "macro_f1": 0.24194874430540678,
+        "weighted_f1": 0.3146116290030095
+    }
+}
