@@ -1,0 +1,57 @@
+{
+    "experiment": "ResNet18 6-Class Regularization",
+    "architecture": "ResNet18",
+    "dataset": "ChestMNIST",
+    "image_size": 128,
+    "input_channels": 1,
+    "classes": [
+        "atelectasis",
+        "cardiomegaly",
+        "effusion",
+        "infiltration",
+        "mass",
+        "pneumothorax"
+    ],
+    "selected_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        7
+    ],
+    "initialization": "ImageNet pretrained ResNet18",
+    "optimizer": "Adam",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "loss_function": "BCEWithLogitsLoss",
+    "best_epoch": 4,
+    "best_validation_loss": 0.9140743046576608,
+    "fixed_threshold_metrics": {
+        "micro_precision": 0.20930353160815227,
+        "micro_recall": 0.6961021041738531,
+        "micro_f1": 0.32183724731868746,
+        "macro_f1": 0.3002917654007668,
+        "weighted_f1": 0.34308036812654547,
+        "macro_auroc": 0.818004290138449,
+        "mean_average_precision": 0.3234664156637245
+    },
+    "optimized_threshold_metrics": {
+        "micro_precision": 0.33514755684567005,
+        "micro_recall": 0.47792342186961023,
+        "micro_f1": 0.393999715626333,
+        "macro_f1": 0.38268258342064415,
+        "weighted_f1": 0.39374347278387356,
+        "macro_auroc": 0.818004290138449,
+        "mean_average_precision": 0.3234664156637245
+    },
+    "optimized_thresholds": {
+        "atelectasis": 0.7000000000000001,
+        "cardiomegaly": 0.9000000000000001,
+        "effusion": 0.7500000000000001,
+        "infiltration": 0.55,
+        "mass": 0.8500000000000001,
+        "pneumothorax": 0.8
+    },
+    "note": "Exploratory validation results. Not clinically validated. Validation data was used for model selection and threshold optimization."
+}
