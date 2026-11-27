@@ -1,0 +1,45 @@
+{
+    "loss_function": "weighted_bce",
+    "seed": 42,
+    "best_auroc_epoch": 6,
+    "best_macro_auroc": 0.8181845465842873,
+    "val_loss_at_best_auroc": 0.9729414472223784,
+    "map_at_best_auroc": 0.32205399017841646,
+    "micro_f1_at_best_auroc": 0.3407765037215852,
+    "macro_f1_at_best_auroc": 0.3147636932248759,
+    "best_map_epoch": 6,
+    "best_macro_map": 0.32205399017841646,
+    "auroc_at_best_map": 0.8181845465842873,
+    "class_auroc_at_best_auroc": {
+        "Atelectasis": 0.7785616577743564,
+        "Cardiomegaly": 0.9016423399216685,
+        "Effusion": 0.8611828031939661,
+        "Infiltration": 0.6838668266441069,
+        "Mass": 0.8366651312063432,
+        "Pneumothorax": 0.8471885207652824
+    },
+    "class_ap_at_best_auroc": {
+        "Atelectasis": 0.28265080214840094,
+        "Cardiomegaly": 0.24766474952998552,
+        "Effusion": 0.4451443737397946,
+        "Infiltration": 0.32036124064003635,
+        "Mass": 0.36899269521140843,
+        "Pneumothorax": 0.2675100798008728
+    },
+    "class_auroc_at_best_map": {
+        "Atelectasis": 0.7785616577743564,
+        "Cardiomegaly": 0.9016423399216685,
+        "Effusion": 0.8611828031939661,
+        "Infiltration": 0.6838668266441069,
+        "Mass": 0.8366651312063432,
+        "Pneumothorax": 0.8471885207652824
+    },
+    "class_ap_at_best_map": {
+        "Atelectasis": 0.28265080214840094,
+        "Cardiomegaly": 0.24766474952998552,
+        "Effusion": 0.4451443737397946,
+        "Infiltration": 0.32036124064003635,
+        "Mass": 0.36899269521140843,
+        "Pneumothorax": 0.2675100798008728
+    }
+}
